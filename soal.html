@@ -1,0 +1,197 @@
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WEB LATIHAN TES P3K(Pegawai Pemerintah dengan Perjanjian Kerja) TAHUN 2025 </title>
+
+    <style>
+        body { font-family: Arial, sans-serif; text-align: center; }
+        .container { max-width: 600px; margin: auto; padding: 20px; }
+        .question { margin: 20px 0; }
+        .btn { padding: 10px; margin: 5px; cursor: pointer; }
+        .save { background: green; color: white; }
+        .skip { background: orange; color: white; }
+        .timer { font-size: 18px; font-weight: bold; color: red; }
+
+	#nomor-soal {
+    	display: flex;
+   	 flex-wrap: wrap;
+    	gap: 5px;
+    	margin-bottom: 10px;
+		}
+	.nomor {
+ 	   width: 30px;
+  	  height: 30px;
+    	display: flex;
+    	align-items: center;
+    	justify-content: center;
+    	border: 1px solid black;
+    	cursor: pointer;
+    	background-color: rgb(180, 10, 10);
+	}
+	.jawab { background-color: green; color: rgb(255, 255, 255); } /* Soal sudah dijawab */
+	.active { background-color: gray; color: rgb(255, 255, 255); } /* Soal aktif */
+    </style>
+
+</head>
+<body onload="mulaiLatihan()">
+
+    <div class="container">
+        <h2>WEB LATIHAN TES P3K(Pegawai Pemerintah dengan Perjanjian Kerja) TAHUN 2025</h2>
+        <div align="left">
+            <p><strong>Nama Peserta:</strong> <span id="namaPeserta"></span></p>
+        </div>
+        <div align="right">
+            <button onclick="akhiriUjian()">Akhiri Ujian</button>
+            <p><strong>Sisa Waktu:</strong> <span id="timer" class="timer"></span></p>
+            
+        </div>
+
+        <div id="nomor-soal"></div>
+	<div id="soal-container"></div>
+
+        <button class="btn save" onclick="simpanJawaban()">Simmpan Jawaban</button>
+        <button class="btn skip" onclick="nextSoal()">Skip Soal</button>
+       
+    </div>
+<script>
+    function akhiriUjian() {
+    if (confirm("Apakah Anda yakin ingin mengakhiri ujian?")) {
+        // Simpan jawaban yang sedang dipilih, jika ada
+        let jawabanTerpilih = document.querySelector('input[name="jawaban"]:checked');
+        if (jawabanTerpilih) {
+            jawabanUser[currentSoal] = jawabanTerpilih.value;
+        }
+        hitungNilai(); // Fungsi untuk menghitung skor dan mengarahkan ke halaman hasil
+          }
+    }
+    function updateNomorSoal() {
+    let nomorContainer = document.getElementById("nomor-soal");
+    nomorContainer.innerHTML = "";
+    for (let i = 0; i < soalList.length; i++) {
+        let nomor = document.createElement("div");
+        nomor.innerText = i + 1;
+        nomor.classList.add("nomor");
+        if (jawabanUser[i] !== undefined) {
+            nomor.classList.add("jawab"); // Warna hijau jika sudah dijawab
+        }
+        if (i === currentSoal) {
+            nomor.classList.add("active"); // Warna biru jika soal aktif
+        }
+        nomor.onclick = function() { lompatKeSoal(i); };
+        nomorContainer.appendChild(nomor);
+     }
+    }
+
+    function lompatKeSoal(nomor) {
+    currentSoal = nomor;
+    tampilkanSoal();
+    }
+
+    function hitungNilai() {
+    let skor = 0;
+    for (let i = 0; i < soalList.length; i++) {
+        if (jawabanUser[i] === soalList[i].jawaban) {
+            skor += 5;
+        }
+    }
+    localStorage.setItem("skorAkhir", skor);
+    window.location.href = "hasil.html";
+    }
+
+    function mulaiLatihan() {
+        tampilkanSoal();
+        hitungMundur();
+    }
+
+    document.getElementById("namaPeserta").innerText = localStorage.getItem("nama");
+
+    let soalList = [
+        { pertanyaan: "Siapa Presiden Pertama Indonesia?", pilihan: ["Soeharto", "Soekarno", "Jokowi"], jawaban: "Soekarno" },
+        { pertanyaan: "2+2?", pilihan: ["3", "4", "5"], jawaban: "4" },
+        { pertanyaan: "5-2?", pilihan: ["2", "3", "4"], jawaban: "3" },
+        { pertanyaan: "3×3?", pilihan: ["6", "8", "9"], jawaban: "9" },
+        { pertanyaan: "10÷2?", pilihan: ["2", "5", "10"], jawaban: "5" },
+        { pertanyaan: "7-3?", pilihan: ["3", "4", "5"], jawaban: "4" },
+        { pertanyaan: "4+4?", pilihan: ["6", "7", "8"], jawaban: "8" },
+        { pertanyaan: "6÷3?", pilihan: ["1", "2", "3"], jawaban: "2" },
+        { pertanyaan: "9-6?", pilihan: ["2", "3", "4"], jawaban: "3" },
+        { pertanyaan: "8×2?", pilihan: ["14", "16", "18"], jawaban: "16" },
+        { pertanyaan: "12÷4?", pilihan: ["2", "3", "4"], jawaban: "3" },
+        { pertanyaan: "5+7?", pilihan: ["11", "12", "13"], jawaban: "12" },
+        { pertanyaan: "15-5?", pilihan: ["9", "10", "11"], jawaban: "10" },
+        { pertanyaan: "20÷4?", pilihan: ["4", "5", "6"], jawaban: "5" },
+        { pertanyaan: "9×2?", pilihan: ["16", "18", "20"], jawaban: "18" },
+        { pertanyaan: "14-7?", pilihan: ["5", "6", "7"], jawaban: "7" },
+        { pertanyaan: "16÷2?", pilihan: ["6", "7", "8"], jawaban: "8" },
+        { pertanyaan: "3+9?", pilihan: ["10", "11", "12"], jawaban: "12" },
+        { pertanyaan: "6×3?", pilihan: ["16", "18", "20"], jawaban: "18" },
+        { pertanyaan: "10-2?", pilihan: ["7", "8", "9"], jawaban: "8" }
+    ];
+
+    soalList = soalList.sort(() => Math.random() - 0.5).slice(0, 20);
+
+    let currentSoal = 0;
+    let jawabanUser = {};
+
+    function tampilkanSoal() {
+        if (currentSoal >= soalList.length) {
+            alertt("Semua soal selesai!");
+            hitungNilai();
+            return;
+    }
+
+    let soal = soalList[currentSoal];
+    document.getElementById("soal-container").innerHTML = `
+        <p>${soal.pertanyaan}</p>
+        ${soal.pilihan.map(p => `<input type="radio" name="jawaban" value="${p}"> ${p}<br>`).join("")}
+    `;
+
+    updateNomorSoal(); // Perbarui daftar nomor soal setiap kali soal berubah
+
+        }
+
+        let soal = soalList[currentSoal];
+        document.getElementById("soal-container").innerHTML = `
+            <p>${soal.pertanyaan}</p>
+            ${soal.pilihan.map(p => `<input type="radio" name="jawaban" value="${p}"> ${p}<br>`).join("")}
+        `;
+    
+
+    function simpanJawaban() {
+        let jawabanTerpilih = document.querySelector('input[name="jawaban"]:checked');
+        if (jawabanTerpilih) {
+            jawabanUser[currentSoal] = jawabanTerpilih.value;
+        }
+        nextSoal();
+    }
+
+    function nextSoal() {
+        currentSoal++;
+        tampilkanSoal();
+    }
+
+    let waktu = 1800;
+    function hitungMundur() {
+        let menit = Math.floor(waktu / 60);
+        let detik = waktu % 60;
+        document.getElementById("timer").innerText = `${menit}:${detik < 10 ? "0" : ""}${detik}`;
+        waktu--;
+
+        if (waktu < 0) {
+            window.location.href = "waktu_habis.html";
+        } else {
+            setTimeout(hitungMundur, 1000);
+        }
+    }
+
+    tampilkanSoal();
+    hitungMundur();
+</script>
+
+<footer style="text-align:center; padding: 10px; background: #ffffff;">
+    <p>&copy; 2025 cristyhdy</p>
+</footer>
+
+</body>
+</html>

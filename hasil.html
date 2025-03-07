@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <title>Hasil Latihan</title>
+</head>
+<body>
+    <div align="center">
+        <h1>Hasil Latihan</h1>
+        <p>Nama Peserta: <span id="namaPeserta"></span></p>
+        <h2>Skor Anda: <span id="skor"></span></h2>
+
+        <script>
+            document.getElementById("namaPeserta").innerText = localStorage.getItem("nama");
+            document.getElementById("skor").innerText = localStorage.getItem("skorAkhir");
+        </script>
+    </div>
+
+    <footer style="text-align:center; padding: 10px; background: #ffffff;">
+        <p>&copy; 2025 cristyhdy</p>
+    </footer>
+
+</body>
+</html>

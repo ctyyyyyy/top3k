@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mulai Kerja Soal</title>
+    <style>
+        body { font-family: Arial, sans-serif; text-align: center; margin-top: 50px; }
+        .container { max-width: 400px; margin: auto; padding: 20px; }
+        button { padding: 10px 20px; font-size: 18px; cursor: pointer; }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h2>Selamat Datang, <span id="nama"></span></h2>
+        <p>Pastikan Data Anda Benar </p>
+        <h2>NIK :<span id="nik"></span></h2>
+        <h2>NO : <span id="no"></span></h2>
+        <h2>Tempat Lahir:<span id="tempat"></span></h2>
+        <h2>Tanggal Lahir : <span id="tgl"></span></h2>
+       
+        <p>Silakan klik tombol di bawah untuk memulai kerja soal.</p>
+        <button onclick="mulaiSoal()">Mulai Kerja Soal</button>
+    </div>
+
+    <script>
+        document.getElementById("nama").innerText = localStorage.getItem("nama");
+        document.getElementById("nik").innerText = localStorage.getItem("nik");
+        document.getElementById("no").innerText = localStorage.getItem("no");
+        document.getElementById("tempat").innerText = localStorage.getItem("tempat");
+        document.getElementById("tgl").innerText = localStorage.getItem("tgl");
+        document.getElementById("pin").innerText = localStorage.getItem("pin");
+
+        function mulaiSoal() {
+            window.location.href = "soal.html";
+        }
+    </script>
+     <footer style="text-align:center; padding: 10px; background: #ffffff;">
+        <p>&copy; 2025 cristyhdy</p>
+    </footer>
+
+
+</body>
+</html>
